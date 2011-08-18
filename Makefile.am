@@ -13,3 +13,17 @@ xmonad_log_applet_LDADD = \
 	$(DBUS_GLIB_LIBS) \
 	$(LIBPANEL_LIBS) \
 	$(GCONF_LIBS)
+
+serverdir = $(libdir)/bonobo/servers
+server_files = xmonad-log-applet.server
+server_DATA = $(server_files)
+
+$(server_files): $(server_files:.server=.server.in)
+	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	\
+		-e "s|\@DATADIR\@|$(datadir)|" < $< > $@
+
+DISTCLEANFILES = \
+	$(server_DATA)
+
+EXTRA_DIST = \
+	xmonad-log-applet.server.in
