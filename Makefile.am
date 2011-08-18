@@ -36,5 +36,28 @@ DISTCLEANFILES = \
 	$(server_DATA)
 
 EXTRA_DIST = \
+	xmonad48.png \
 	xmonad-log-applet.schema \
 	xmonad-log-applet.server.in
+
+gtk_update_icon_cache = gtk-update-icon-cache -f -t
+
+update-icon-cache:
+	@-if test -z "$(DESTDIR)"; then \
+		echo "Updating Gtk icon cache."; \
+		$(gtk_update_icon_cache) $(datadir)/icons/hicolor; \
+	else \
+		echo "*** Icon cache not updated.  After (un)install, run this:"; \
+		echo "*** $(gtk_update_icon_cache) $(datadir)/icons/hicolor"; \
+	fi
+
+install-icons:
+	mkdir -p $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps; \
+	$(INSTALL_DATA) $(srcdir)/xmonad48.png $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad48.png;
+
+uninstall-icons:
+	rm -f $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad48.png;
+
+install-data-local: install-icons update-icon-cache
+
+uninstall-local: uninstall-icons update-icon-cache
