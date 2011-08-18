@@ -1,4 +1,4 @@
-bin_PROGRAMS = xmonad-log-applet
+libexec_PROGRAMS = xmonad-log-applet
 
 xmonad_log_applet_SOURCES = main.c
 
@@ -14,6 +14,16 @@ xmonad_log_applet_LDADD = \
 	$(LIBPANEL_LIBS) \
 	$(GCONF_LIBS)
 
+schemasdir = @GCONF_SCHEMA_FILE_DIR@
+schemas_files = xmonad-log-applet.schema
+schemas_DATA = $(schemas_files)
+
+if GCONF_SCHEMAS_INSTALL
+install-data-local:
+	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
+	gconftool-2 --makefile-install-rule $(schemas_DATA)
+endif
+
 serverdir = $(libdir)/bonobo/servers
 server_files = xmonad-log-applet.server
 server_DATA = $(server_files)
@@ -26,4 +36,5 @@ DISTCLEANFILES = \
 	$(server_DATA)
 
 EXTRA_DIST = \
+	xmonad-log-applet.schema \
 	xmonad-log-applet.server.in
