@@ -1,6 +1,7 @@
 AC_INIT([Xmonad Log Applet], [1.0.3])
 AC_CONFIG_SRCDIR([main.c])
 AC_CONFIG_HEADERS([config.h])
+AM_INIT_AUTOMAKE([foreign])
 
 AM_MAINTAINER_MODE
 
