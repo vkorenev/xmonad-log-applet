@@ -20,8 +20,10 @@ schemas_DATA = $(schemas_files)
 
 if GCONF_SCHEMAS_INSTALL
 install-data-local:
-	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
-	gconftool-2 --makefile-install-rule $(schemas_DATA)
+	for p in $(schemas_DATA) ; do \
+		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
+		gconftool-2 --makefile-install-rule $(srcdir)/$$p ; \
+	done ;
 endif
 
 serverdir = $(libdir)/bonobo/servers
