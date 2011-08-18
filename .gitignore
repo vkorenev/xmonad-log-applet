@@ -1,6 +1,9 @@
+.#*
+aclocal.m4
+autom4te.cache
+config.*
+configure
 Makefile
-config.log
-config.status
+.*.swp
 xmonad-log-applet
 xmonad-log-applet.server
-.*.swp
