@@ -1,3 +1,4 @@
-libdata/bonobo/servers/xmonad-log-applet.server
 libexec/xmonad-log-applet
-share/icons/hicolor/48x48/apps/xmonad48.png
+share/dbus-1/services/org.xmonad.XmonadLogAppletFactory.service
+share/gnome-panel/applets/org.xmonad.Log.panel-applet
+share/icons/hicolor/48x48/apps/xmonad.png
