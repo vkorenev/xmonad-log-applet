@@ -1,4 +1,5 @@
 *.o
+*.panel-applet
 *.tar.gz
 .#*
 .*.swp
@@ -14,4 +15,3 @@ install-sh
 missing
 stamp-h1
 xmonad-log-applet
-xmonad-log-applet.server

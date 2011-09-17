@@ -1,6 +1,11 @@
-/* Copyright (C) 2009 Adam Wick
+/* main.c
+ *
+ * Copyright (c) 2009 Adam Wick
+ * Copyright (c) 2011 Alexander Kojevnikov
+ *
  * See LICENSE for licensing information
  */
+
 #include <string.h>
 #include <panel-applet.h>
 #include <gtk/gtklabel.h>
@@ -9,9 +14,10 @@
 #include <stdlib.h>
 
 /* AW: I pulled this code off the interwebs. It makes background 
- * transparency actually work */
-void change_bg(PanelApplet *applet, PanelAppletBackgroundType type,
-               GdkColor *color, GdkPixmap *pixmap)
+ * transparency actually work
+ */
+static void change_bg(PanelApplet *applet, PanelAppletBackgroundType type,
+                      GdkColor *color, GdkPixmap *pixmap)
 {
   GtkRcStyle *rc_style;
   GtkStyle *style;
@@ -81,7 +87,7 @@ void xmonadlog_applet_size_change(GConfClient *client,
 
 static gboolean xmonadlog_applet_fill(PanelApplet *applet)
 {
-  GtkWidget *label = gtk_label_new("Waiting for XMonad");
+  GtkWidget *label = gtk_label_new("Waiting for Xmonad...");
 
   // Set up Gconf
   GConfClient* client = gconf_client_get_default();
@@ -125,7 +131,7 @@ static gboolean xmonadlog_applet_factory(PanelApplet *applet,
 {
   gboolean retval = FALSE;
 
-  if(!strcmp(iid, "OAFIID:XMonadLogApplet"))
+  if(!strcmp(iid, "XmonadLogApplet"))
     retval = xmonadlog_applet_fill(applet);
 
   if(retval == FALSE) {
@@ -136,9 +142,8 @@ static gboolean xmonadlog_applet_factory(PanelApplet *applet,
   return retval;
 }
 
-PANEL_APPLET_BONOBO_FACTORY("OAFIID:XMonadLogApplet_Factory",
-                            PANEL_TYPE_APPLET,
-                            "XMonadLogApplet",
-                            "0.0.1",
-                            xmonadlog_applet_factory,
-                            NULL);
+PANEL_APPLET_OUT_PROCESS_FACTORY("XmonadLogAppletFactory",
+                                 PANEL_TYPE_APPLET,
+                                 "XmonadLogApplet",
+                                 xmonadlog_applet_factory,
+                                 NULL);

@@ -26,21 +26,22 @@ install-data-local:
 	done ;
 endif
 
-serverdir = $(libdir)/bonobo/servers
-server_files = xmonad-log-applet.server
-server_DATA = $(server_files)
+# TODO: use libpanel_applet_dir in GNOME3
+appletdir = $(datadir)/gnome-panel/applets
+applet_files = org.xmonad.Log.panel-applet
+applet_DATA = $(applet_files)
 
-$(server_files): $(server_files:.server=.server.in)
+$(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
 	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	\
 		-e "s|\@DATADIR\@|$(datadir)|" < $< > $@
 
 DISTCLEANFILES = \
-	$(server_DATA)
+	$(applet_DATA)
 
 EXTRA_DIST = \
 	xmonad48.png \
 	xmonad-log-applet.schema \
-	xmonad-log-applet.server.in
+	org.xmonad.Log.panel-applet.in
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t
 
