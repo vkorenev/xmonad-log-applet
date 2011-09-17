@@ -32,16 +32,24 @@ applet_files = org.xmonad.Log.panel-applet
 applet_DATA = $(applet_files)
 
 $(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
-	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	\
-		-e "s|\@DATADIR\@|$(datadir)|" < $< > $@
+	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	$< > $@
+
+servicedir = $(datadir)/dbus-1/services
+service_in_files = org.xmonad.XmonadLogAppletFactory.service.in
+service_DATA = $(service_in_files:.service.in=.service)
+
+org.xmonad.XmonadLogAppletFactory.service: $(service_in_files)
+	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	$< > $@
 
 DISTCLEANFILES = \
-	$(applet_DATA)
+	$(applet_DATA) \
+	$(service_DATA)
 
 EXTRA_DIST = \
 	xmonad48.png \
 	xmonad-log-applet.schema \
-	org.xmonad.Log.panel-applet.in
+	org.xmonad.Log.panel-applet.in \
+	$(service_in_files)
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t
 

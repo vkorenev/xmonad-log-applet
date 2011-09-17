@@ -1,5 +1,6 @@
 *.o
 *.panel-applet
+*.service
 *.tar.gz
 .#*
 .*.swp
