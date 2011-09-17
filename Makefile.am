@@ -56,10 +56,10 @@ update-icon-cache:
 
 install-icons:
 	mkdir -p $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps; \
-	$(INSTALL_DATA) $(srcdir)/xmonad48.png $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad48.png;
+	$(INSTALL_DATA) $(srcdir)/xmonad48.png $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad.png;
 
 uninstall-icons:
-	rm -f $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad48.png;
+	rm -f $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad.png;
 
 install-data-local: install-icons update-icon-cache
 

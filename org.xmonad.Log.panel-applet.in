@@ -7,5 +7,5 @@ Description=Factory for the xmonad-log-applet
 [XmonadLogApplet]
 Name=Xmonad Log Applet
 Description=Monitor your Xmonad log
-Icon=xmonad48
+Icon=xmonad
 BonoboId=OAFIID:XmonadLogApplet
