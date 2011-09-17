@@ -28,17 +28,17 @@ endif
 
 # TODO: use libpanel_applet_dir in GNOME3
 appletdir = $(datadir)/gnome-panel/applets
-applet_files = org.xmonad.Log.panel-applet
+applet_files = org.gnome.panel.XmonadLogApplet.panel-applet
 applet_DATA = $(applet_files)
 
 $(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
 	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	$< > $@
 
 servicedir = $(datadir)/dbus-1/services
-service_in_files = org.xmonad.XmonadLogAppletFactory.service.in
+service_in_files = org.gnome.panel.applet.XmonadLogAppletFactory.service.in
 service_DATA = $(service_in_files:.service.in=.service)
 
-org.xmonad.XmonadLogAppletFactory.service: $(service_in_files)
+org.gnome.panel.applet.XmonadLogAppletFactory.service: $(service_in_files)
 	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	$< > $@
 
 DISTCLEANFILES = \
@@ -48,7 +48,7 @@ DISTCLEANFILES = \
 EXTRA_DIST = \
 	xmonad48.png \
 	xmonad-log-applet.schema \
-	org.xmonad.Log.panel-applet.in \
+	org.gnome.panel.XmonadLogApplet.panel-applet.in \
 	$(service_in_files)
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t
