@@ -13,6 +13,8 @@
 #include <panel-applet.h>
 #include <dbus/dbus-glib.h>
 
+#include "config.h"
+
 static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *widget)
 {
     gtk_label_set_markup(GTK_LABEL(widget), msg);
@@ -82,6 +84,8 @@ static gboolean xmonad_log_applet_factory(
 PANEL_APPLET_OUT_PROCESS_FACTORY(
     "XmonadLogAppletFactory",
     PANEL_TYPE_APPLET,
+#ifdef PANEL_GNOME2
     "XmonadLogApplet",
+#endif
     xmonad_log_applet_factory,
     NULL);

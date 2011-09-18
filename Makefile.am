@@ -12,8 +12,7 @@ xmonad_log_applet_LDADD = \
 	$(DBUS_GLIB_LIBS) \
 	$(LIBPANEL_LIBS)
 
-# TODO: use libpanel_applet_dir in GNOME3
-appletdir = $(datadir)/gnome-panel/applets
+appletdir = $(datadir)$(panel_applets)
 applet_files = org.gnome.panel.XmonadLogApplet.panel-applet
 applet_DATA = $(applet_files)
 
