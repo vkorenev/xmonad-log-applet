@@ -5,26 +5,12 @@ xmonad_log_applet_SOURCES = main.c
 xmonad_log_applet_CPPFLAGS = \
 	$(GLIB_CFLAGS) \
 	$(DBUS_GLIB_CFLAGS) \
-	$(LIBPANEL_CFLAGS) \
-	$(GCONF_CFLAGS)
+	$(LIBPANEL_CFLAGS)
 
 xmonad_log_applet_LDADD = \
 	$(GLIB_LIBS) \
 	$(DBUS_GLIB_LIBS) \
-	$(LIBPANEL_LIBS) \
-	$(GCONF_LIBS)
-
-schemasdir = @GCONF_SCHEMA_FILE_DIR@
-schemas_files = xmonad-log-applet.schema
-schemas_DATA = $(schemas_files)
-
-if GCONF_SCHEMAS_INSTALL
-install-data-local:
-	for p in $(schemas_DATA) ; do \
-		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
-		gconftool-2 --makefile-install-rule $(srcdir)/$$p ; \
-	done ;
-endif
+	$(LIBPANEL_LIBS)
 
 # TODO: use libpanel_applet_dir in GNOME3
 appletdir = $(datadir)/gnome-panel/applets
@@ -47,7 +33,6 @@ DISTCLEANFILES = \
 
 EXTRA_DIST = \
 	xmonad48.png \
-	xmonad-log-applet.schema \
 	org.gnome.panel.XmonadLogApplet.panel-applet.in \
 	$(service_in_files)
 

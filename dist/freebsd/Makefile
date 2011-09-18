@@ -18,6 +18,4 @@ USE_GMAKE=	yes
 USE_GNOME=	gnomeprefix gnomehack gnomepanel
 GNU_CONFIGURE=	yes
 
-GCONF_SCHEMAS=	xmonad-log-applet.schema
-
 .include <bsd.port.mk>
