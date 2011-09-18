@@ -75,7 +75,7 @@ static void set_up_dbus_transfer(GtkWidget *buf)
         proxy, "Update", (GCallback)signal_handler, buf, NULL);
 }
 
-static gboolean xmonadlog_applet_fill(PanelApplet *applet)
+static gboolean xmonad_log_applet_fill(PanelApplet *applet)
 {
 	panel_applet_set_flags(
         applet,
@@ -90,20 +90,19 @@ static gboolean xmonadlog_applet_fill(PanelApplet *applet)
     gtk_misc_set_alignment((GtkMisc *)label, 0.0, 0.5);
     set_up_dbus_transfer(label);
 
-    g_signal_connect(applet, "change-background", G_CALLBACK(change_bg), NULL);
     gtk_container_add(GTK_CONTAINER(applet), label);
     gtk_widget_show_all(GTK_WIDGET(applet));
 
     return TRUE;
 }
 
-static gboolean xmonadlog_applet_factory(
+static gboolean xmonad_log_applet_factory(
     PanelApplet *applet, const gchar *iid, gpointer data)
 {
     gboolean retval = FALSE;
 
     if(!strcmp(iid, "XmonadLogApplet"))
-        retval = xmonadlog_applet_fill(applet);
+        retval = xmonad_log_applet_fill(applet);
 
     if(retval == FALSE) {
         printf("Wrong applet!\n");
@@ -117,5 +116,5 @@ PANEL_APPLET_OUT_PROCESS_FACTORY(
     "XmonadLogAppletFactory",
     PANEL_TYPE_APPLET,
     "XmonadLogApplet",
-    xmonadlog_applet_factory,
+    xmonad_log_applet_factory,
     NULL);
