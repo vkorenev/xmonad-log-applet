@@ -77,7 +77,14 @@ static void set_up_dbus_transfer(GtkWidget *buf)
 
 static gboolean xmonadlog_applet_fill(PanelApplet *applet)
 {
+	panel_applet_set_flags(
+        applet,
+        PANEL_APPLET_EXPAND_MAJOR |
+        PANEL_APPLET_EXPAND_MINOR |
+        PANEL_APPLET_HAS_HANDLE);
+
     GtkWidget *label = gtk_label_new("Waiting for Xmonad...");
+    gtk_label_set_ellipsize(label, PANGO_ELLIPSIZE_END);
 
     gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
     gtk_misc_set_alignment((GtkMisc *)label, 0.0, 0.5);
