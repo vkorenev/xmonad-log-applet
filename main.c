@@ -51,10 +51,10 @@ static gboolean xmonad_log_applet_fill(PanelApplet *applet)
     panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
 
     GtkWidget *label = gtk_label_new("Waiting for Xmonad...");
-    gtk_label_set_ellipsize(label, PANGO_ELLIPSIZE_END);
+    gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_END);
 
     gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
-    gtk_misc_set_alignment((GtkMisc *)label, 0.0, 0.5);
+    gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
     set_up_dbus_transfer(label);
 
     gtk_container_add(GTK_CONTAINER(applet), label);
