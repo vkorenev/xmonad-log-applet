@@ -23,9 +23,6 @@ already running [Xmonad within GNOME][1]:
 The applet supports both GNOME 2 and GNOME 3 panels, just pass
 `--with-panel=gnomeX` to `./configure` when compiling.
 
-Note that for most Linux distributions (including Ubuntu) you also need to pass
-`--prefix=/usr` to `./configure`.
-
 ## Contact
 
 If you have any questions, comments or bug reports, please contact me via GitHub

@@ -10,8 +10,13 @@ AC_PROG_SED
 AC_PROG_INSTALL
 AC_HEADER_STDC
 
+PKG_PROG_PKG_CONFIG
+
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.20.0)
+
 PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= 0.80)
+SESSION_BUS_SERVICES_DIR=`$PKG_CONFIG --variable=session_bus_services_dir dbus-1`
+AC_SUBST([SESSION_BUS_SERVICES_DIR])
 
 AC_ARG_WITH(
     [panel],
@@ -21,16 +26,18 @@ AC_ARG_WITH(
 )
 AS_IF(
     [test "x$panel" = xgnome2],
-          AC_DEFINE(PANEL_GNOME2, 1, [panel version])
-          panel_applets=/gnome-panel/applets
-          [PKG_CHECK_MODULES(LIBPANEL, libpanelapplet-3.0 >= 2.32.0)],
+        [PKG_CHECK_MODULES(LIBPANEL, libpanelapplet-3.0 >= 2.32.0)]
+        LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libpanelapplet-3.0`/share/gnome-panel/applets
+        [AC_DEFINE(PANEL_GNOME2, 1, [panel version])]
+        ,
     [test "x$panel" = xgnome3],
-          AC_DEFINE(PANEL_GNOME3, 1, [panel version])
-          panel_applets=/gnome-panel/4.0/applets
-          [PKG_CHECK_MODULES(LIBPANEL, libpanelapplet-4.0 >= 3.0.0)],
+        [PKG_CHECK_MODULES(LIBPANEL, libpanelapplet-4.0 >= 3.0.0)]
+        LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=libpanel_applet_dir libpanelapplet-4.0`
+        [AC_DEFINE(PANEL_GNOME3, 1, [panel version])]
+        ,
     [AC_ERROR([Unknown panel type, use gnome2 or gnome3])]
 )
-AC_SUBST([panel_applets])
+AC_SUBST([LIBPANEL_APPLET_DIR])
 
 AC_CONFIG_FILES([Makefile])
 

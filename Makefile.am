@@ -12,14 +12,14 @@ xmonad_log_applet_LDADD = \
 	$(DBUS_GLIB_LIBS) \
 	$(LIBPANEL_LIBS)
 
-appletdir = $(datadir)$(panel_applets)
+appletdir = $(LIBPANEL_APPLET_DIR)
 applet_files = org.gnome.panel.XmonadLogApplet.panel-applet
 applet_DATA = $(applet_files)
 
 $(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
 	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	$< > $@
 
-servicedir = $(datadir)/dbus-1/services
+servicedir = $(SESSION_BUS_SERVICES_DIR)
 service_in_files = org.gnome.panel.applet.XmonadLogAppletFactory.service.in
 service_DATA = $(service_in_files:.service.in=.service)
 
