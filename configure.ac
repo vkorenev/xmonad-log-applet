@@ -20,7 +20,7 @@ AC_SUBST([SESSION_BUS_SERVICES_DIR])
 
 AC_ARG_WITH(
     [panel],
-    [AS_HELP_STRING([--with-panel], [target gnome2 (default) or gnome3 panel])],
+    [AS_HELP_STRING([--with-panel], [target gnome2 (default), gnome3 or xfce4 panel])],
     [panel=$withval],
     [panel=gnome2]
 )
@@ -35,9 +35,18 @@ AS_IF(
         LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=libpanel_applet_dir libpanelapplet-4.0`
         [AC_DEFINE(PANEL_GNOME3, 1, [panel version])]
         ,
-    [AC_MSG_ERROR([Unknown panel type, use gnome2 or gnome3])]
+    [test "x$panel" = xxfce4],
+        [PKG_CHECK_MODULES(LIBPANEL, libxfce4panel-1.0 >= 4.6.0)]
+        LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libxfce4panel-1.0`/share/xfce4/panel-plugins
+        [AC_DEFINE(PANEL_XFCE4, 1, [panel version])]
+        ,
+    [AC_MSG_ERROR([Unknown panel type, use gnome2, gnome3 or xfce4])]
 )
 AC_SUBST([LIBPANEL_APPLET_DIR])
+
+AM_CONDITIONAL([PANEL_GNOME2], [test "x$panel" = xgnome2])
+AM_CONDITIONAL([PANEL_GNOME3], [test "x$panel" = xgnome3])
+AM_CONDITIONAL([PANEL_XFCE4], [test "x$panel" = xxfce4])
 
 AC_CONFIG_FILES([Makefile])
 

@@ -13,18 +13,24 @@ xmonad_log_applet_LDADD = \
 	$(LIBPANEL_LIBS)
 
 appletdir = $(LIBPANEL_APPLET_DIR)
+if PANEL_XFCE4
+applet_files = xmonad-log-applet.desktop
+$(applet_files): $(applet_files:.desktop=.desktop.in)
+	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+else
 applet_files = org.gnome.panel.XmonadLogApplet.panel-applet
-applet_DATA = $(applet_files)
-
 $(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
-	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	$< > $@
+	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+endif
+applet_DATA = $(applet_files)
 
 servicedir = $(SESSION_BUS_SERVICES_DIR)
 service_in_files = org.gnome.panel.applet.XmonadLogAppletFactory.service.in
+if !PANEL_XFCE4
 service_DATA = $(service_in_files:.service.in=.service)
-
 org.gnome.panel.applet.XmonadLogAppletFactory.service: $(service_in_files)
-	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|"	$< > $@
+	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+endif
 
 DISTCLEANFILES = \
 	$(applet_DATA) \
@@ -33,6 +39,7 @@ DISTCLEANFILES = \
 EXTRA_DIST = \
 	xmonad48.png \
 	org.gnome.panel.XmonadLogApplet.panel-applet.in \
+	xmonad-log-applet.desktop.in \
 	$(service_in_files)
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t
