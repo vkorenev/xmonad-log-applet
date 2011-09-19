@@ -35,7 +35,7 @@ AS_IF(
         LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=libpanel_applet_dir libpanelapplet-4.0`
         [AC_DEFINE(PANEL_GNOME3, 1, [panel version])]
         ,
-    [AC_ERROR([Unknown panel type, use gnome2 or gnome3])]
+    [AC_MSG_ERROR([Unknown panel type, use gnome2 or gnome3])]
 )
 AC_SUBST([LIBPANEL_APPLET_DIR])
 
