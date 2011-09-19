@@ -1,3 +1,4 @@
+*.desktop
 *.o
 *.panel-applet
 *.service

@@ -6,14 +6,18 @@
  * See LICENSE for licensing information
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
+#ifndef PANEL_XFCE4
 #include <panel-applet.h>
+#else
+#include <libxfce4panel/xfce-panel-plugin.h>
+#endif
 #include <dbus/dbus-glib.h>
-
-#include "config.h"
 
 static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *widget)
 {
@@ -42,15 +46,22 @@ static void set_up_dbus_transfer(GtkWidget *buf)
         proxy, "Update", (GCallback)signal_handler, buf, NULL);
 }
 
+
+#ifndef PANEL_XFCE4
 static gboolean xmonad_log_applet_fill(PanelApplet *applet)
+#else
+static void xmonad_log_applet_fill(GtkContainer *container)
+#endif
 {
-	panel_applet_set_flags(
+#ifndef PANEL_XFCE4
+    panel_applet_set_flags(
         applet,
         PANEL_APPLET_EXPAND_MAJOR |
         PANEL_APPLET_EXPAND_MINOR |
         PANEL_APPLET_HAS_HANDLE);
 
     panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
+#endif
 
     GtkWidget *label = gtk_label_new("Waiting for Xmonad...");
     gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_END);
@@ -59,12 +70,17 @@ static gboolean xmonad_log_applet_fill(PanelApplet *applet)
     gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
     set_up_dbus_transfer(label);
 
+#ifndef PANEL_XFCE4
     gtk_container_add(GTK_CONTAINER(applet), label);
     gtk_widget_show_all(GTK_WIDGET(applet));
 
     return TRUE;
+#else
+    gtk_container_add(container, label);
+#endif
 }
 
+#ifndef PANEL_XFCE4
 static gboolean xmonad_log_applet_factory(
     PanelApplet *applet, const gchar *iid, gpointer data)
 {
@@ -80,7 +96,16 @@ static gboolean xmonad_log_applet_factory(
 
     return retval;
 }
+#else
+static void xmonad_log_applet_construct(XfcePanelPlugin *plugin)
+{
+    xmonad_log_applet_fill(GTK_CONTAINER(plugin));
+    xfce_panel_plugin_set_expand(plugin, TRUE);
+    gtk_widget_show_all(GTK_WIDGET(plugin));
+}
+#endif
 
+#ifndef PANEL_XFCE4
 PANEL_APPLET_OUT_PROCESS_FACTORY(
     "XmonadLogAppletFactory",
     PANEL_TYPE_APPLET,
@@ -89,3 +114,7 @@ PANEL_APPLET_OUT_PROCESS_FACTORY(
 #endif
     xmonad_log_applet_factory,
     NULL);
+#else
+XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL(
+    xmonad_log_applet_construct);
+#endif
