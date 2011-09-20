@@ -2,6 +2,7 @@
  *
  * Copyright (c) 2009 Adam Wick
  * Copyright (c) 2011 Alexander Kojevnikov
+ * Copyright (c) 2011 Dan Callaghan
  *
  * See LICENSE for licensing information
  */
