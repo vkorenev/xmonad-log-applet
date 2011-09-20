@@ -2,7 +2,7 @@
 Type=X-XFCE-PanelPlugin
 Name=Xmonad Log Applet
 Comment=Monitor your Xmonad log
-Icon=xmonad
+Icon=xmonad-log-applet
 X-XFCE-Exec=@LIBEXECDIR@/xmonad-log-applet
 X-XFCE-Unique=false
 X-XFCE-Internal=false

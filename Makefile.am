@@ -40,7 +40,7 @@ EXTRA_DIST = \
 	AUTHORS.md \
 	LICENSE \
 	README.md \
-	xmonad48.png \
+	xmonad-log-applet48.png \
 	org.gnome.panel.XmonadLogApplet.panel-applet.in \
 	xmonad-log-applet.desktop.in \
 	$(service_in_files)
@@ -58,10 +58,10 @@ update-icon-cache:
 
 install-icons:
 	mkdir -p $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps; \
-	$(INSTALL_DATA) $(srcdir)/xmonad48.png $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad.png;
+	$(INSTALL_DATA) $(srcdir)/xmonad-log-applet48.png $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad-log-applet.png;
 
 uninstall-icons:
-	rm -f $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad.png;
+	rm -f $(DESTDIR)$(datadir)/icons/hicolor/48x48/apps/xmonad-log-applet.png;
 
 install-data-local: install-icons update-icon-cache
 
