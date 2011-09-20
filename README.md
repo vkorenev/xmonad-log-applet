@@ -33,4 +33,4 @@ or drop me a line at <alexander@kojevnikov.com>.
 [1]: http://www.haskell.org/haskellwiki/Xmonad/Using_xmonad_in_Gnome
 [2]: http://www.haskell.org/haskellwiki/Xmonad/Using_xmonad_in_XFCE
 [3]: https://github.com/alexkay/xmonad-log-applet/blob/master/xmonad.hs
-[4]: https://github.com/downloads/alexkay/xmonad-log-applet/xmonad-log-applet-1.0.4.tar.gz
+[4]: https://github.com/downloads/alexkay/xmonad-log-applet/xmonad-log-applet-2.0.0.tar.gz

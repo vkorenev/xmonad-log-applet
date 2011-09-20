@@ -46,9 +46,9 @@ dbusOutput dbus str = do
 
 pangoColor :: String -> String -> String
 pangoColor fg = wrap left right
- where
-  left  = "<span foreground=\"" ++ fg ++ "\">"
-  right = "</span>"
+  where
+    left  = "<span foreground=\"" ++ fg ++ "\">"
+    right = "</span>"
 
 pangoSanitize :: String -> String
 pangoSanitize = foldr sanitize ""
