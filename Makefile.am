@@ -37,6 +37,9 @@ DISTCLEANFILES = \
 	$(service_DATA)
 
 EXTRA_DIST = \
+	AUTHORS.md \
+	LICENSE \
+	README.md \
 	xmonad48.png \
 	org.gnome.panel.XmonadLogApplet.panel-applet.in \
 	xmonad-log-applet.desktop.in \
