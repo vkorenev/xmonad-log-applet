@@ -24,6 +24,17 @@ The applet supports GNOME 2, GNOME 3 and Xfce 4 panels, just pass
 `--with-panel=X` to `./configure` when compiling, where X is one of gnome2,
 gnome3 or xfce4.
 
+## FAQ
+
+* GHC 7.x cannot compile [DBus][5] from Hackage, what should I do?
+
+  You need to rename `Exception` to `OldException` in `Internal.hsc`. See
+  [this blog post][6] for instructions.
+
+* How to add applets to the GNOME3 panel?
+
+  You need to hold the Alt key when right-clicking the panel.
+
 ## Contact
 
 If you have any questions, comments or bug reports, please contact me via GitHub
@@ -34,3 +45,5 @@ or drop me a line at <alexander@kojevnikov.com>.
 [2]: http://www.haskell.org/haskellwiki/Xmonad/Using_xmonad_in_XFCE
 [3]: https://github.com/alexkay/xmonad-log-applet/blob/master/xmonad.hs
 [4]: https://github.com/downloads/alexkay/xmonad-log-applet/xmonad-log-applet-2.0.0.tar.gz
+[5]: http://hackage.haskell.org/package/DBus
+[6]: http://versia.com/2011/09/xmonad-log-applet-gnome-xfce/
