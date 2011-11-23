@@ -40,6 +40,7 @@ EXTRA_DIST = \
 	AUTHORS.md \
 	LICENSE \
 	README.md \
+	xmonad.hs \
 	xmonad-log-applet48.png \
 	org.gnome.panel.XmonadLogApplet.panel-applet.in \
 	xmonad-log-applet.desktop.in \
