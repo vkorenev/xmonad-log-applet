@@ -6,9 +6,9 @@
 #
 
 PORTNAME=	xmonad-log-applet
-PORTVERSION=	1.0.4
+PORTVERSION=	2.0.0
 CATEGORIES=	misc
-MASTER_SITES=	http://github.com/downloads/alexkay/${PORTNAME}/
+MASTER_SITES=	http://cloud.github.com/downloads/alexkay/${PORTNAME}/
 
 MAINTAINER=	alexander@kojevnikov.com
 COMMENT=	An applet that will display Xmonad log information
@@ -17,5 +17,6 @@ INSTALLS_ICONS=	yes
 USE_GMAKE=	yes
 USE_GNOME=	gnomeprefix gnomehack gnomepanel
 GNU_CONFIGURE=	yes
+CONFIGURE_ARGS+=	--with-panel=gnome2
 
 .include <bsd.port.mk>
