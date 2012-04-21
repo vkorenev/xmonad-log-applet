@@ -25,9 +25,9 @@ $(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
 endif
 applet_DATA = $(applet_files)
 
+if !PANEL_XFCE4
 servicedir = $(SESSION_BUS_SERVICES_DIR)
 service_in_files = org.gnome.panel.applet.XmonadLogAppletFactory.service.in
-if !PANEL_XFCE4
 service_DATA = $(service_in_files:.service.in=.service)
 org.gnome.panel.applet.XmonadLogAppletFactory.service: $(service_in_files)
 	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
