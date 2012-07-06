@@ -28,21 +28,25 @@ AS_IF(
     [test "x$panel" = xgnome2],
         [PKG_CHECK_MODULES(LIBPANEL, libpanelapplet-3.0 >= 2.32.0)]
         LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libpanelapplet-3.0`/share/gnome-panel/applets
+        PLUGIN_DIR=`$PKG_CONFIG --variable=prefix libpanelapplet-3.0`/libexec
         [AC_DEFINE(PANEL_GNOME2, 1, [panel version])]
         ,
     [test "x$panel" = xgnome3],
         [PKG_CHECK_MODULES(LIBPANEL, libpanelapplet-4.0 >= 3.0.0)]
         LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=libpanel_applet_dir libpanelapplet-4.0`
+        PLUGIN_DIR=`$PKG_CONFIG --variable=prefix libpanelapplet-4.0`/libexec
         [AC_DEFINE(PANEL_GNOME3, 1, [panel version])]
         ,
     [test "x$panel" = xxfce4],
         [PKG_CHECK_MODULES(LIBPANEL, libxfce4panel-1.0 >= 4.6.0)]
         LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libxfce4panel-1.0`/share/xfce4/panel-plugins
+        PLUGIN_DIR=`$PKG_CONFIG --variable=libdir libxfce4panel-1.0`/xfce4/panel/plugins
         [AC_DEFINE(PANEL_XFCE4, 1, [panel version])]
         ,
     [AC_MSG_ERROR([Unknown panel type, use gnome2, gnome3 or xfce4])]
 )
 AC_SUBST([LIBPANEL_APPLET_DIR])
+AC_SUBST([PLUGIN_DIR])
 
 AM_CONDITIONAL([PANEL_GNOME2], [test "x$panel" = xgnome2])
 AM_CONDITIONAL([PANEL_GNOME3], [test "x$panel" = xgnome3])

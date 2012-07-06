@@ -1,4 +1,5 @@
-libexec_PROGRAMS = xmonad-log-applet
+plugindir = $(PLUGIN_DIR)
+plugin_PROGRAMS = xmonad-log-applet
 
 xmonad_log_applet_SOURCES = main.c
 
@@ -16,20 +17,20 @@ appletdir = $(LIBPANEL_APPLET_DIR)
 if PANEL_XFCE4
 applet_files = xmonad-log-applet.desktop
 $(applet_files): $(applet_files:.desktop=.desktop.in)
-	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
 else
 applet_files = org.gnome.panel.XmonadLogApplet.panel-applet
 $(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
-	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
 endif
 applet_DATA = $(applet_files)
 
+if !PANEL_XFCE4
 servicedir = $(SESSION_BUS_SERVICES_DIR)
 service_in_files = org.gnome.panel.applet.XmonadLogAppletFactory.service.in
-if !PANEL_XFCE4
 service_DATA = $(service_in_files:.service.in=.service)
 org.gnome.panel.applet.XmonadLogAppletFactory.service: $(service_in_files)
-	$(SED) -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
 endif
 
 DISTCLEANFILES = \
