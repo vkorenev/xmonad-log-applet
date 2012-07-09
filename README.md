@@ -24,6 +24,9 @@ The applet supports GNOME 2, GNOME 3 and Xfce 4 panels, just pass
 `--with-panel=X` to `./configure` when compiling, where X is one of gnome2,
 gnome3 or xfce4.
 
+If you are compiling from a git clone, you should run `./autogen.sh` instead of
+`./configure`.
+
 ## FAQ
 
 * GHC 7.x cannot compile [DBus][5] from Hackage, what should I do?
