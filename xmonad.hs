@@ -1,11 +1,11 @@
-{-# LANGUAGE OverloadedStrings, PackageImports #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 import XMonad
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 
-import qualified "dbus" DBus as D
-import qualified "dbus" DBus.Client as D
+import qualified DBus as D
+import qualified DBus.Client as D
 import qualified Codec.Binary.UTF8.String as UTF8
 
 main :: IO ()
