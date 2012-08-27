@@ -29,10 +29,9 @@ If you are compiling from a git clone, you should run `./autogen.sh` instead of
 
 ## FAQ
 
-* GHC 7.x cannot compile [DBus][5] from Hackage, what should I do?
+* Which Haskell D-Bus package should I use?
 
-  You need to rename `Exception` to `OldException` in `Internal.hsc`. See
-  [this blog post][6] for instructions.
+  The recommended package is [dbus][5].
 
 * How to add applets to the GNOME3 panel?
 
@@ -48,5 +47,5 @@ or drop me a line at <alexander@kojevnikov.com>.
 [2]: http://www.haskell.org/haskellwiki/Xmonad/Using_xmonad_in_XFCE
 [3]: https://github.com/alexkay/xmonad-log-applet/blob/master/xmonad.hs
 [4]: https://github.com/downloads/alexkay/xmonad-log-applet/xmonad-log-applet-2.0.0.tar.gz
-[5]: http://hackage.haskell.org/package/DBus
+[5]: http://hackage.haskell.org/package/dbus
 [6]: http://versia.com/2011/09/xmonad-log-applet-gnome-xfce/
