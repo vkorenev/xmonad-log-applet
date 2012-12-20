@@ -13,6 +13,9 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#ifdef PANEL_MATE
+#include <mate-panel-applet.h>
+#endif
 #ifndef PANEL_XFCE4
 #include <panel-applet.h>
 #else
@@ -110,7 +113,7 @@ static void xmonad_log_applet_construct(XfcePanelPlugin *plugin)
 PANEL_APPLET_OUT_PROCESS_FACTORY(
     "XmonadLogAppletFactory",
     PANEL_TYPE_APPLET,
-#ifdef PANEL_GNOME2
+#if defined PANEL_GNOME2 || defined PANEL_MATE
     "XmonadLogApplet",
 #endif
     xmonad_log_applet_factory,

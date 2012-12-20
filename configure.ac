@@ -20,7 +20,7 @@ AC_SUBST([SESSION_BUS_SERVICES_DIR])
 
 AC_ARG_WITH(
     [panel],
-    [AS_HELP_STRING([--with-panel], [target gnome2 (default), MATE,  gnome3 or xfce4 panel])],
+    [AS_HELP_STRING([--with-panel], [target gnome2 (default), mate,  gnome3 or xfce4 panel])],
     [panel=$withval],
     [panel=gnome2]
 )
@@ -32,9 +32,9 @@ AS_IF(
         [AC_DEFINE(PANEL_GNOME2, 1, [panel version])]
         ,
     [test "x$panel" = xmate],
-        [PKG_CHECK_MODULES(LIBMATEPANEL, libmatepanelapplet >= 1.4.0)]
-        LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet`/share/mate-panel/applets
-        PLUGIN_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet`/libexec
+        [PKG_CHECK_MODULES(LIBMATEPANEL, libmatepanelapplet-3.0 >= 1.4.0)]
+        LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet-3.0`/share/mate-panel/applets
+        PLUGIN_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet-3.0`/libexec
         [AC_DEFINE(PANEL_MATE, 1, [panel version])]
         ,
     [test "x$panel" = xgnome3],
