@@ -20,7 +20,7 @@ AC_SUBST([SESSION_BUS_SERVICES_DIR])
 
 AC_ARG_WITH(
     [panel],
-    [AS_HELP_STRING([--with-panel], [target gnome2 (default), gnome3 or xfce4 panel])],
+    [AS_HELP_STRING([--with-panel], [target gnome2 (default), MATE,  gnome3 or xfce4 panel])],
     [panel=$withval],
     [panel=gnome2]
 )
@@ -30,6 +30,12 @@ AS_IF(
         LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libpanelapplet-3.0`/share/gnome-panel/applets
         PLUGIN_DIR=`$PKG_CONFIG --variable=prefix libpanelapplet-3.0`/libexec
         [AC_DEFINE(PANEL_GNOME2, 1, [panel version])]
+        ,
+    [test "x$panel" = xmate],
+        [PKG_CHECK_MODULES(LIBMATEPANEL, libmatepanelapplet >= 1.4.0)]
+        LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet`/share/mate-panel/applets
+        PLUGIN_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet`/libexec
+        [AC_DEFINE(PANEL_MATE, 1, [panel version])]
         ,
     [test "x$panel" = xgnome3],
         [PKG_CHECK_MODULES(LIBPANEL, libpanelapplet-4.0 >= 3.0.0)]
@@ -49,6 +55,7 @@ AC_SUBST([LIBPANEL_APPLET_DIR])
 AC_SUBST([PLUGIN_DIR])
 
 AM_CONDITIONAL([PANEL_GNOME2], [test "x$panel" = xgnome2])
+AM_CONDITIONAL([PANEL_MATE], [test "x$panel" = xmate])
 AM_CONDITIONAL([PANEL_GNOME3], [test "x$panel" = xgnome3])
 AM_CONDITIONAL([PANEL_XFCE4], [test "x$panel" = xxfce4])
 

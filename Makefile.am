@@ -19,6 +19,11 @@ applet_files = xmonad-log-applet.desktop
 $(applet_files): $(applet_files:.desktop=.desktop.in)
 	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
 else
+    if PANEL_MATE
+    applet_files = org.mate.panel.XmonadLogApplet.panel-applet
+    $(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
+    		$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
+else
 applet_files = org.gnome.panel.XmonadLogApplet.panel-applet
 $(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
 	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
@@ -26,10 +31,17 @@ endif
 applet_DATA = $(applet_files)
 
 if !PANEL_XFCE4
+if !PANEL_MATE
 servicedir = $(SESSION_BUS_SERVICES_DIR)
 service_in_files = org.gnome.panel.applet.XmonadLogAppletFactory.service.in
 service_DATA = $(service_in_files:.service.in=.service)
 org.gnome.panel.applet.XmonadLogAppletFactory.service: $(service_in_files)
+	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
+else
+    servicedir = $(SESSION_BUS_SERVICES_DIR)
+service_in_files = org.mate.panel.applet.XmonadLogAppletFactory.service.in
+service_DATA = $(service_in_files:.service.in=.service)
+	org.mate.panel.applet.XmonadLogAppletFactory.service: $(service_in_files)
 	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
 endif
 
@@ -44,6 +56,7 @@ EXTRA_DIST = \
 	xmonad.hs \
 	xmonad-log-applet48.png \
 	org.gnome.panel.XmonadLogApplet.panel-applet.in \
+	org.mate.panel.XmonadLogApplet.panel-applet.in \
 	xmonad-log-applet.desktop.in \
 	$(service_in_files)
 
