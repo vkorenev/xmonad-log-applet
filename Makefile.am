@@ -6,12 +6,16 @@ xmonad_log_applet_SOURCES = main.c
 xmonad_log_applet_CPPFLAGS = \
 			     $(GLIB_CFLAGS) \
 			     $(DBUS_GLIB_CFLAGS) \
-			     $(LIBPANEL_CFLAGS)
+			     $(LIBPANEL_CFLAGS) \
+			     $(LIBMATEPANEL_CFLAGS) \
+			     @GTK_CFLAGS@
 
 xmonad_log_applet_LDADD = \
 			  $(GLIB_LIBS) \
 			  $(DBUS_GLIB_LIBS) \
-			  $(LIBPANEL_LIBS)
+			  $(LIBPANEL_LIBS) \
+			  $(LIBMATEPANEL_LIBS) \
+			  @GTK_LIBS@
 
 appletdir = $(LIBPANEL_APPLET_DIR)
 if PANEL_XFCE4

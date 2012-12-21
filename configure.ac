@@ -13,8 +13,10 @@ AC_HEADER_STDC
 PKG_PROG_PKG_CONFIG
 
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.20.0)
-
 PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= 0.80)
+
+AM_PATH_GTK_2_0([2.10.0],,AC_MSG_ERROR([Gtk+ 2.10.0 or higher required.]))
+
 SESSION_BUS_SERVICES_DIR=`$PKG_CONFIG --variable=session_bus_services_dir dbus-1`
 AC_SUBST([SESSION_BUS_SERVICES_DIR])
 
