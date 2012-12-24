@@ -12,22 +12,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
-#include <gtk/gtk.h>
-#ifdef PANEL_MATE
-#include <mate-panel-applet.h>
-#endif
-#if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
-#include <panel-applet.h>
-
-#ifndef PANEL_XFCE4
-#include <panel-applet.h>
-#else
-#include <libxfce4panel/xfce-panel-plugin.h>
-#endif
-#include <dbus/dbus-glib.h>
-*/
-
 #include <gtk/gtk.h>
 #include <dbus/dbus-glib.h>
 
@@ -67,7 +51,6 @@ static void set_up_dbus_transfer(GtkWidget *buf)
 }
 
 
-/*#ifndef PANEL_XFCE4*/
 #if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
 static gboolean xmonad_log_applet_fill(PanelApplet *applet)
 #elif defined(PANEL_MATE)
@@ -76,7 +59,6 @@ static gboolean xmonad_log_applet_fill(MatePanelApplet *applet)
 static void xmonad_log_applet_fill(GtkContainer *container)
 #endif
 {
-/*#ifndef PANEL_XFCE4*/
 #if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
     panel_applet_set_flags(
         applet,
@@ -112,7 +94,6 @@ static void xmonad_log_applet_fill(GtkContainer *container)
 #endif
 }
 
-/*#ifndef PANEL_XFCE4*/
 #if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
 static gboolean xmonad_log_applet_factory(
     PanelApplet *applet, const gchar *iid, gpointer data)
@@ -154,7 +135,6 @@ static void xmonad_log_applet_construct(XfcePanelPlugin *plugin)
 }
 #endif
 
-/*#ifndef PANEL_XFCE4*/
 #if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
 PANEL_APPLET_OUT_PROCESS_FACTORY(
     "XmonadLogAppletFactory",
