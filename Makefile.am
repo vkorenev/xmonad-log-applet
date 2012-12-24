@@ -24,8 +24,8 @@ $(applet_files): $(applet_files:.desktop=.desktop.in)
 	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
 else
 if PANEL_MATE
-applet_files = org.mate.panel.XmonadLogApplet.panel-applet
-$(applet_files): $(applet_files:.panel-applet=.panel-applet.in)
+applet_files = org.mate.panel.XmonadLogApplet.mate-panel-applet
+$(applet_files): $(applet_files:.panel-applet=.mate-panel-applet.in)
 	$(SED) -e "s|\@PLUGIN_DIR\@|$(PLUGIN_DIR)|" $< > $@
 else
 applet_files = org.gnome.panel.XmonadLogApplet.panel-applet
