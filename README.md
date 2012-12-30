@@ -1,6 +1,6 @@
 # xmonad-log-applet
 
-xmonad-log-applet is for Xmonad users who find the GNOME or Xfce panel
+xmonad-log-applet is for Xmonad users who find the GNOME, MATE, or Xfce panel
 useful. The applet will show the active workspaces, the title of the selected
 window or whatever information you send it from your xmonad.hs.
 
@@ -10,7 +10,7 @@ on the [old website][0].
 ## Installation
 
 There are two pieces of setup you'll need to get this working, assuming you are
-already running Xmonad within [GNOME][1] or [Xfce][2]:
+already running Xmonad within [GNOME][1], MATE or [Xfce][2]:
 
 * An xmonad.hs setup file that will send properly-formatted information to
   D-Bus. You can use [this xmonad.hs][3] as an example; obviously, feel free to
@@ -20,9 +20,9 @@ already running Xmonad within [GNOME][1] or [Xfce][2]:
   [tarball][4], or pull the latest version from the git repository: `git clone
   git://github.com/alexkay/xmonad-log-applet.git`
 
-The applet supports GNOME 2, GNOME 3 and Xfce 4 panels, just pass
+The applet supports GNOME 2, GNOME 3, MATE and Xfce 4 panels, just pass
 `--with-panel=X` to `./configure` when compiling, where X is one of gnome2,
-gnome3 or xfce4.
+gnome3, mate or xfce4.
 
 If you are compiling from a git clone, you should run `./autogen.sh` instead of
 `./configure`.

@@ -1,8 +1,9 @@
 /* main.c
  *
  * Copyright (c) 2009 Adam Wick
- * Copyright (c) 2011 Alexander Kojevnikov
+ * Copyright (c) 2011-2012 Alexander Kojevnikov
  * Copyright (c) 2011 Dan Callaghan
+ * Copyright (c) 2012 Ari Croock
  *
  * See LICENSE for licensing information
  */
@@ -15,12 +16,14 @@
 #include <gtk/gtk.h>
 #include <dbus/dbus-glib.h>
 
+#ifdef PANEL_GNOME
+#include <panel-applet.h>
+#endif
 #ifdef PANEL_MATE
 #include <mate-panel-applet.h>
-#elif defined(PANEL_XFCE4)
+#endif
+#ifdef PANEL_XFCE4
 #include <libxfce4panel/xfce-panel-plugin.h>
-#else
-#include <panel-applet.h>
 #endif
 
 static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *widget)
@@ -51,15 +54,17 @@ static void set_up_dbus_transfer(GtkWidget *buf)
 }
 
 
-#if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
+#ifdef PANEL_GNOME
 static gboolean xmonad_log_applet_fill(PanelApplet *applet)
-#elif defined(PANEL_MATE)
+#endif
+#ifdef PANEL_MATE
 static gboolean xmonad_log_applet_fill(MatePanelApplet *applet)
-#else
+#endif
+#ifdef PANEL_XFCE4
 static void xmonad_log_applet_fill(GtkContainer *container)
 #endif
 {
-#if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
+#ifdef PANEL_GNOME
     panel_applet_set_flags(
         applet,
         PANEL_APPLET_EXPAND_MAJOR |
@@ -67,7 +72,8 @@ static void xmonad_log_applet_fill(GtkContainer *container)
         PANEL_APPLET_HAS_HANDLE);
 
     panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
-#elif defined(PANEL_MATE)
+#endif
+#ifdef PANEL_MATE
     mate_panel_applet_set_flags(
         applet,
         MATE_PANEL_APPLET_EXPAND_MAJOR |
@@ -94,7 +100,7 @@ static void xmonad_log_applet_fill(GtkContainer *container)
 #endif
 }
 
-#if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
+#ifdef PANEL_GNOME
 static gboolean xmonad_log_applet_factory(
     PanelApplet *applet, const gchar *iid, gpointer data)
 {
@@ -110,7 +116,8 @@ static gboolean xmonad_log_applet_factory(
 
     return retval;
 }
-#elif defined(PANEL_MATE)
+#endif
+#ifdef PANEL_MATE
 static gboolean xmonad_log_applet_factory(
     MatePanelApplet *applet, const gchar *iid, gpointer data)
 {
@@ -126,7 +133,8 @@ static gboolean xmonad_log_applet_factory(
 
     return retval;
 }
-#else
+#endif
+#ifdef PANEL_XFCE4
 static void xmonad_log_applet_construct(XfcePanelPlugin *plugin)
 {
     xmonad_log_applet_fill(GTK_CONTAINER(plugin));
@@ -135,7 +143,7 @@ static void xmonad_log_applet_construct(XfcePanelPlugin *plugin)
 }
 #endif
 
-#if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
+#ifdef PANEL_GNOME
 PANEL_APPLET_OUT_PROCESS_FACTORY(
     "XmonadLogAppletFactory",
     PANEL_TYPE_APPLET,
@@ -144,14 +152,16 @@ PANEL_APPLET_OUT_PROCESS_FACTORY(
 #endif
     xmonad_log_applet_factory,
     NULL);
-#elif defined(PANEL_MATE)
+#endif
+#ifdef PANEL_MATE
 MATE_PANEL_APPLET_OUT_PROCESS_FACTORY(
     "XmonadLogAppletFactory",
     PANEL_TYPE_APPLET,
     "XmonadLogApplet",
     xmonad_log_applet_factory,
     NULL);
-#else
+#endif
+#ifdef PANEL_XFCE4
 XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL(
     xmonad_log_applet_construct);
 #endif

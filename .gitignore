@@ -1,10 +1,10 @@
 *.desktop
-*.un~
+*.mate-panel-applet
 *.o
 *.panel-applet
-*.mate-panel-applet
 *.service
 *.tar.gz
+*.un~
 .#*
 .*.swp
 .deps
