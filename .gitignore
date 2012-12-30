@@ -1,6 +1,8 @@
 *.desktop
+*.un~
 *.o
 *.panel-applet
+*.mate-panel-applet
 *.service
 *.tar.gz
 .#*

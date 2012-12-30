@@ -13,12 +13,15 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-#ifndef PANEL_XFCE4
-#include <panel-applet.h>
-#else
-#include <libxfce4panel/xfce-panel-plugin.h>
-#endif
 #include <dbus/dbus-glib.h>
+
+#ifdef PANEL_MATE
+#include <mate-panel-applet.h>
+#elif defined(PANEL_XFCE4)
+#include <libxfce4panel/xfce-panel-plugin.h>
+#else
+#include <panel-applet.h>
+#endif
 
 static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *widget)
 {
@@ -48,13 +51,15 @@ static void set_up_dbus_transfer(GtkWidget *buf)
 }
 
 
-#ifndef PANEL_XFCE4
+#if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
 static gboolean xmonad_log_applet_fill(PanelApplet *applet)
+#elif defined(PANEL_MATE)
+static gboolean xmonad_log_applet_fill(MatePanelApplet *applet)
 #else
 static void xmonad_log_applet_fill(GtkContainer *container)
 #endif
 {
-#ifndef PANEL_XFCE4
+#if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
     panel_applet_set_flags(
         applet,
         PANEL_APPLET_EXPAND_MAJOR |
@@ -62,6 +67,14 @@ static void xmonad_log_applet_fill(GtkContainer *container)
         PANEL_APPLET_HAS_HANDLE);
 
     panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
+#elif defined(PANEL_MATE)
+    mate_panel_applet_set_flags(
+        applet,
+        MATE_PANEL_APPLET_EXPAND_MAJOR |
+        MATE_PANEL_APPLET_EXPAND_MINOR |
+        MATE_PANEL_APPLET_HAS_HANDLE);
+
+    mate_panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
 #endif
 
     GtkWidget *label = gtk_label_new("Waiting for Xmonad...");
@@ -81,9 +94,25 @@ static void xmonad_log_applet_fill(GtkContainer *container)
 #endif
 }
 
-#ifndef PANEL_XFCE4
+#if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
 static gboolean xmonad_log_applet_factory(
     PanelApplet *applet, const gchar *iid, gpointer data)
+{
+    gboolean retval = FALSE;
+
+    if(!strcmp(iid, "XmonadLogApplet"))
+        retval = xmonad_log_applet_fill(applet);
+
+    if(retval == FALSE) {
+        printf("Wrong applet!\n");
+        exit(-1);
+    }
+
+    return retval;
+}
+#elif defined(PANEL_MATE)
+static gboolean xmonad_log_applet_factory(
+    MatePanelApplet *applet, const gchar *iid, gpointer data)
 {
     gboolean retval = FALSE;
 
@@ -106,13 +135,20 @@ static void xmonad_log_applet_construct(XfcePanelPlugin *plugin)
 }
 #endif
 
-#ifndef PANEL_XFCE4
+#if defined(PANEL_GNOME2) || defined(PANEL_GNOME3)
 PANEL_APPLET_OUT_PROCESS_FACTORY(
     "XmonadLogAppletFactory",
     PANEL_TYPE_APPLET,
 #ifdef PANEL_GNOME2
     "XmonadLogApplet",
 #endif
+    xmonad_log_applet_factory,
+    NULL);
+#elif defined(PANEL_MATE)
+MATE_PANEL_APPLET_OUT_PROCESS_FACTORY(
+    "XmonadLogAppletFactory",
+    PANEL_TYPE_APPLET,
+    "XmonadLogApplet",
     xmonad_log_applet_factory,
     NULL);
 #else
