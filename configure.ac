@@ -20,9 +20,9 @@ AC_SUBST([SESSION_BUS_SERVICES_DIR])
 
 AC_ARG_WITH(
     [panel],
-    [AS_HELP_STRING([--with-panel], [target gnome2 (default), gnome3, mate or xfce4 panel])],
+    [AS_HELP_STRING([--with-panel], [target gnome2, gnome3, mate or xfce4 (default) panel])],
     [panel=$withval],
-    [panel=gnome2]
+    [panel=xfce4]
 )
 AS_IF(
     [test "x$panel" = xgnome2],

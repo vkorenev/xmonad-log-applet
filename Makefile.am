@@ -58,9 +58,10 @@ EXTRA_DIST = \
 	xmonad.hs \
 	xmonad-log-applet48.png \
 	org.gnome.panel.XmonadLogApplet.panel-applet.in \
-	org.mate.panel.XmonadLogApplet.panel-applet.in \
-	xmonad-log-applet.desktop.in \
-	$(service_in_files)
+	org.gnome.panel.applet.XmonadLogAppletFactory.service.in \
+	org.mate.panel.XmonadLogApplet.mate-panel-applet.in \
+	org.mate.panel.applet.XmonadLogAppletFactory.service.in \
+	xmonad-log-applet.desktop.in
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t
 
