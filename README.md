@@ -29,13 +29,13 @@ If you are compiling from a git clone, you should run `./autogen.sh` instead of
 
 ## FAQ
 
-* Which Haskell D-Bus package should I use?
+*   Which Haskell D-Bus package should I use?
 
-  The recommended package is [dbus][5].
+    The recommended package is [dbus][5].
 
-* How to add applets to the GNOME3 panel?
+*   How to add applets to the GNOME3 panel?
 
-  You need to hold the Alt key when right-clicking the panel.
+    You need to hold the Alt key when right-clicking the panel.
 
 ## Contact
 
@@ -46,6 +46,6 @@ or drop me a line at <alexander@kojevnikov.com>.
 [1]: http://www.haskell.org/haskellwiki/Xmonad/Using_xmonad_in_Gnome
 [2]: http://www.haskell.org/haskellwiki/Xmonad/Using_xmonad_in_XFCE
 [3]: https://github.com/alexkay/xmonad-log-applet/blob/master/xmonad.hs
-[4]: https://github.com/downloads/alexkay/xmonad-log-applet/xmonad-log-applet-2.0.0.tar.gz
+[4]: https://xmonad-log-applet.googlecode.com/files/xmonad-log-applet-2.1.0.tar.gz
 [5]: http://hackage.haskell.org/package/dbus
 [6]: http://versia.com/2011/09/xmonad-log-applet-gnome-xfce/
