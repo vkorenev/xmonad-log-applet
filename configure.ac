@@ -13,6 +13,7 @@ AC_HEADER_STDC
 PKG_PROG_PKG_CONFIG
 
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.20.0)
+PKG_CHECK_MODULES(XCB, xcb xcb-ewmh)
 
 PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= 0.80)
 SESSION_BUS_SERVICES_DIR=`$PKG_CONFIG --variable=session_bus_services_dir dbus-1`
