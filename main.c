@@ -117,30 +117,39 @@ static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *containe
         }
         m++;
 
+        GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+        gtk_container_add(GTK_CONTAINER(container), box);
+
         char str[10];
         snprintf(str, 10, "%ld", workspace_id);
         GtkWidget *label = gtk_label_new(str);
-        gtk_container_add(GTK_CONTAINER(container), label);
+        gtk_container_add(GTK_CONTAINER(box), label);
 
         while (*m != 0) {
             long xid = strtol(m, &m, 0);
 
-            if (xid == 0) {
-                *m = 0;
-                break;
-            }
-
-            GtkWidget *icon = get_icon(xid);
-            if (icon != NULL) {
-                gtk_container_add(GTK_CONTAINER(container), icon);
+            if (xid != 0) {
+                GtkWidget *icon = get_icon(xid);
+                if (icon != NULL) {
+                    gtk_container_add(GTK_CONTAINER(box), icon);
+                }
             }
 
             if (*m == ';') {
                 m++;
                 break;
             }
+            if (*m != ',') {
+                break;
+            }
             m++;
         }
+    }
+
+    // Window tittle
+    if (*m == '|') {
+        GtkWidget *label = gtk_label_new(m + 1);
+        gtk_container_add(GTK_CONTAINER(container), label);
     }
 
     gtk_widget_show_all(container);
@@ -198,7 +207,7 @@ static void xmonad_log_applet_fill(GtkContainer *container)
     mate_panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
 #endif
 
-    GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
     set_up_dbus_transfer(box);
 
 #ifndef PANEL_XFCE4

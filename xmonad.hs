@@ -98,7 +98,7 @@ iconsAppletFormatStack s = case s of
 
 iconsAppletPP :: PP
 iconsAppletPP = defaultPP {
-    ppTitle    = const ""
+    ppTitle    = ("|" ++)
   , ppCurrent  = id
   , ppVisible  = id
   , ppHidden   = id
