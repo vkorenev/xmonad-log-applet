@@ -108,12 +108,40 @@ static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *containe
     g_list_free(children);
 
     // Parse msg and repopulate container
-    char *m = (char *)msg;
+    const char *m = msg;
     while (*m != 0) {
+        if (*m == '|') {
+            m++;
+            break;
+        }
+
+        GdkColor color;
+        switch (*m) {
+            case '*':
+                // Current
+                gdk_color_parse("green", &color);
+                break;
+            case '+':
+                // Visible
+                gdk_color_parse("yellow", &color);
+                break;
+            case '-':
+                // Hidden
+                gdk_color_parse("white", &color);
+                break;
+            case '!':
+                // Urgent
+                gdk_color_parse("red", &color);
+                break;
+            default:
+                return;
+        }
+        m++;
+
         long workspace_id = strtol(m, &m, 0);
 
         if (*m != ':' || workspace_id == 0) {
-            break;
+            return;
         }
         m++;
 
@@ -121,8 +149,9 @@ static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *containe
         gtk_container_add(GTK_CONTAINER(container), box);
 
         char str[10];
-        snprintf(str, 10, "%ld", workspace_id);
+        snprintf(str, 10, "%ld:", workspace_id);
         GtkWidget *label = gtk_label_new(str);
+        gtk_widget_modify_fg(GTK_WIDGET(label), GTK_STATE_NORMAL, &color);
         gtk_container_add(GTK_CONTAINER(box), label);
 
         while (*m != 0) {
@@ -140,17 +169,15 @@ static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *containe
                 break;
             }
             if (*m != ',') {
-                break;
+                return;
             }
             m++;
         }
     }
 
     // Window tittle
-    if (*m == '|') {
-        GtkWidget *label = gtk_label_new(m + 1);
-        gtk_container_add(GTK_CONTAINER(container), label);
-    }
+    GtkWidget *label = gtk_label_new(m);
+    gtk_container_add(GTK_CONTAINER(container), label);
 
     gtk_widget_show_all(container);
 }

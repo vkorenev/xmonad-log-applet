@@ -99,12 +99,12 @@ iconsAppletFormatStack s = case s of
 iconsAppletPP :: PP
 iconsAppletPP = defaultPP {
     ppTitle    = ("|" ++)
-  , ppCurrent  = id
-  , ppVisible  = id
-  , ppHidden   = id
-  , ppUrgent   = id
+  , ppCurrent  = ("*" ++)
+  , ppVisible  = ("+" ++)
+  , ppHidden   = ("-" ++)
+  , ppUrgent   = ("!" ++)
   , ppLayout   = const ""
-  , ppSep      = ""
+  , ppSep      = ";"
   }
 
 sepBy :: String   -- ^ separator
