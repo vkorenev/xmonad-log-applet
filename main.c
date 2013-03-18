@@ -37,11 +37,12 @@ static void pixbuff_free(guchar *pixels, gpointer data) {
 // XCB
 xcb_connection_t *c;
 xcb_ewmh_connection_t ewmh;
+int screen_number;
 static void xcb_init() {
     xcb_intern_atom_cookie_t *atom_cookie;
 
     // Connect to X and request the icon
-    c = xcb_connect(NULL, NULL);
+    c = xcb_connect(NULL, &screen_number);
     atom_cookie = xcb_ewmh_init_atoms(c, &ewmh);
     if (atom_cookie == NULL) {
         fprintf(stderr, "Can not request atoms\n");
@@ -101,6 +102,12 @@ static GtkWidget* get_icon(long xid)
     xcb_ewmh_get_wm_icon_reply_wipe(&wm_icon);
 
     return widget;
+}
+
+// Change active window on icon click
+static void icon_click(GtkWidget *widget, GdkEventButton *event, gpointer xid) {
+    xcb_ewmh_request_change_active_window(&ewmh, screen_number, (xcb_window_t)xid, XCB_EWMH_CLIENT_SOURCE_TYPE_OTHER, XCB_CURRENT_TIME, XCB_NONE);
+    xcb_flush(c);
 }
 
 // DBUS
@@ -167,7 +174,11 @@ static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *containe
             if (xid != 0) {
                 GtkWidget *icon = get_icon(xid);
                 if (icon != NULL) {
-                    gtk_container_add(GTK_CONTAINER(box), icon);
+                    GtkWidget *eventbox = gtk_event_box_new();
+                    gtk_event_box_set_visible_window(GTK_EVENT_BOX(eventbox), FALSE);
+                    gtk_container_add(GTK_CONTAINER(eventbox), icon);
+                    gtk_container_add(GTK_CONTAINER(box), eventbox);
+                    g_signal_connect(G_OBJECT(eventbox), "button_press_event", G_CALLBACK(icon_click), (gpointer)xid);
                 }
             }
 

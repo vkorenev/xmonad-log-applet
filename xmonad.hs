@@ -3,6 +3,7 @@
 import XMonad
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.NamedWindows
 import XMonad.Util.WorkspaceCompare
@@ -20,8 +21,9 @@ main :: IO ()
 main = do
   dbus <- D.connectSession
   getWellKnownName dbus
-  xmonad $ gnomeConfig {
+  xmonad $ ewmh gnomeConfig {
     logHook = iconsAppletLog dbus
+  , handleEventHook = handleEventHook gnomeConfig <+> fullscreenEventHook
   }
 
 --
