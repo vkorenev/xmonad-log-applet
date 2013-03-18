@@ -29,20 +29,16 @@
 #include <libxfce4panel/xfce-panel-plugin.h>
 #endif
 
+// Misc
 static void pixbuff_free(guchar *pixels, gpointer data) {
     free(pixels);
 }
 
-// Get icon using XCB
-static GtkWidget* get_icon(long xid)
-{
-    xcb_connection_t *c;
-    xcb_window_t w = xid;
+// XCB
+xcb_connection_t *c;
+xcb_ewmh_connection_t ewmh;
+static void xcb_init() {
     xcb_intern_atom_cookie_t *atom_cookie;
-    xcb_get_property_cookie_t prop_cookie;
-    xcb_ewmh_connection_t ewmh;
-    xcb_ewmh_get_wm_icon_reply_t wm_icon;
-    int i;
 
     // Connect to X and request the icon
     c = xcb_connect(NULL, NULL);
@@ -50,20 +46,27 @@ static GtkWidget* get_icon(long xid)
     if (atom_cookie == NULL) {
         fprintf(stderr, "Can not request atoms\n");
         xcb_disconnect(c);
-        return NULL;
+        return;
     }
 
     if (!xcb_ewmh_init_atoms_replies(&ewmh, atom_cookie, NULL)) {
         fprintf(stderr, "Can not get atom replies\n");
         xcb_disconnect(c);
-        return NULL;
+        return;
     }
+}
+
+// Get icon using XCB
+static GtkWidget* get_icon(long xid)
+{
+    xcb_window_t w = xid;
+    xcb_get_property_cookie_t prop_cookie;
+    xcb_ewmh_get_wm_icon_reply_t wm_icon;
+    int i;
 
     prop_cookie = xcb_ewmh_get_wm_icon(&ewmh, w);
     if (!xcb_ewmh_get_wm_icon_reply(&ewmh, prop_cookie, &wm_icon, NULL)) {
         fprintf(stderr, "Can not get icon (window got no icon?)\n");
-        xcb_ewmh_connection_wipe(&ewmh);
-        xcb_disconnect(c);
         return NULL;
     }
 
@@ -96,12 +99,11 @@ static GtkWidget* get_icon(long xid)
 
     // Cleanup
     xcb_ewmh_get_wm_icon_reply_wipe(&wm_icon);
-    xcb_ewmh_connection_wipe(&ewmh);
-    xcb_disconnect(c);
 
     return widget;
 }
 
+// DBUS
 static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *container)
 {
     // Clear container
@@ -240,6 +242,7 @@ static void xmonad_log_applet_fill(GtkContainer *container)
 #endif
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    xcb_init();
     set_up_dbus_transfer(box);
 
 #ifndef PANEL_XFCE4
