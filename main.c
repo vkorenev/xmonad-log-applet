@@ -16,6 +16,7 @@
 
 #include <gtk/gtk.h>
 #include <dbus/dbus-glib.h>
+#include <dbus/dbus.h>
 #include <xcb/xcb_ewmh.h>
 
 #ifdef PANEL_GNOME
@@ -28,8 +29,12 @@
 #include <libxfce4panel/xfce-panel-plugin.h>
 #endif
 
+static void pixbuff_free(guchar *pixels, gpointer data) {
+    free(pixels);
+}
+
 // Get icon using XCB
-GtkWidget* get_icon(long xid)
+static GtkWidget* get_icon(long xid)
 {
     xcb_connection_t *c;
     xcb_window_t w = xid;
@@ -81,9 +86,9 @@ GtkWidget* get_icon(long xid)
     }
 
     // Scale the icon
-    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_data(data, GDK_COLORSPACE_RGB, TRUE, 8, iterator.width, iterator.height, iterator.width * 4, NULL, NULL);
-    pixbuf = gdk_pixbuf_scale_simple(pixbuf, 20, 20, GDK_INTERP_BILINEAR);
-    free(data); // original data is not used anymore now
+    GdkPixbuf *pixbuf_orig = gdk_pixbuf_new_from_data(data, GDK_COLORSPACE_RGB, TRUE, 8, iterator.width, iterator.height, iterator.width * 4, pixbuff_free, NULL);
+    GdkPixbuf *pixbuf = gdk_pixbuf_scale_simple(pixbuf_orig, 20, 20, GDK_INTERP_BILINEAR);
+    g_object_unref(G_OBJECT(pixbuf_orig)); // original data is not used anymore now
 
     // Create GtkImage from GdkPixbuf
     GtkWidget *widget = gtk_image_new_from_pixbuf(pixbuf);
@@ -108,7 +113,7 @@ static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *containe
     g_list_free(children);
 
     // Parse msg and repopulate container
-    const char *m = msg;
+    char *m = (char *)msg;
     while (*m != 0) {
         if (*m == '|') {
             m++;
