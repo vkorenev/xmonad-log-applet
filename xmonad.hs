@@ -33,10 +33,10 @@ getWellKnownName dbus = do
   D.requestName dbus (D.busName_ "org.xmonad.Log")
                 [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
   return ()
-  
+
 dbusOutput :: D.Client -> String -> IO ()
 dbusOutput dbus str = do
-    let signal = (D.signal "/org/xmonad/Log" "org.xmonad.Log" "Update") {
+    let signal = (D.signal (D.objectPath_ "/org/xmonad/Log") (D.interfaceName_ "org.xmonad.Log") (D.memberName_ "Update")) {
             D.signalBody = [D.toVariant ("<b>" ++ (UTF8.decodeString str) ++ "</b>")]
         }
     D.emit dbus signal
