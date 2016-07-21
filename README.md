@@ -1,5 +1,14 @@
 # xmonad-log-applet
 
+## This Fork
+This fork has the [3 unapplied pull requests](https://github.com/alexkay/xmonad-log-applet/pulls) from master. 
+The master version appears to be unmaintained. In particular for me, the log-applet would not function
+without [Nylen's](https://github.com/nylen) dbus [type cast fix](https://github.com/alexkay/xmonad-log-applet/pull/16).
+I am happy to keep this up to date, but know that __I barely know Haskell__ and that is mostly because of Xmonad. I am primarily a Clojure programmer.
+I can be reached at <e.a.gebhart@gmail.com>
+
+--------------------
+
 xmonad-log-applet is for Xmonad users who find the GNOME, MATE, or Xfce panel
 useful. The applet will show the active workspaces, the title of the selected
 window or whatever information you send it from your xmonad.hs.
