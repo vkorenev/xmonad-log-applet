@@ -20,7 +20,7 @@ AC_SUBST([SESSION_BUS_SERVICES_DIR])
 
 AC_ARG_WITH(
     [panel],
-    [AS_HELP_STRING([--with-panel], [target gnome2, gnome3, mate or xfce4 (default) panel])],
+    [AS_HELP_STRING([--with-panel], [target gnome2, gnome3, gnomeflashback, mate or xfce4 (default) panel])],
     [panel=$withval],
     [panel=xfce4]
 )
@@ -39,6 +39,13 @@ AS_IF(
         [AC_DEFINE(PANEL_GNOME, 1, [panel type])]
         [AC_DEFINE(PANEL_GNOME3, 1, [panel type])]
         ,
+    [test "x$panel" = xgnomeflashback],
+        [PKG_CHECK_MODULES(LIBPANEL, libpanel-applet >= 3.0.0)]
+        LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=libpanel_applet_dir libpanel-applet`
+        PLUGIN_DIR=`$PKG_CONFIG --variable=prefix libpanel-applet`/libexec
+        [AC_DEFINE(PANEL_GNOME, 1, [panel type])]
+        [AC_DEFINE(PANEL_GNOMEFLASHBACK, 1, [panel type])]
+        ,
     [test "x$panel" = xmate],
         [PKG_CHECK_MODULES(LIBPANEL, libmatepanelapplet-4.0 >= 1.4.0)]
         LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet-3.0`/share/mate-panel/applets
@@ -51,14 +58,15 @@ AS_IF(
         PLUGIN_DIR=`$PKG_CONFIG --variable=libdir libxfce4panel-1.0`/xfce4/panel/plugins
         [AC_DEFINE(PANEL_XFCE4, 1, [panel type])]
         ,
-    [AC_MSG_ERROR([Unknown panel type, use gnome2, gnome3, mate or xfce4])]
+    [AC_MSG_ERROR([Unknown panel type, use gnome2, gnome3, gnomeflashback, mate or xfce4])]
 )
 AC_SUBST([LIBPANEL_APPLET_DIR])
 AC_SUBST([PLUGIN_DIR])
 
-AM_CONDITIONAL([PANEL_GNOME], [test "x$panel" = xgnome2 -o "x$panel" = xgnome3])
+AM_CONDITIONAL([PANEL_GNOME], [test "x$panel" = xgnome2 -o "x$panel" = xgnome3 -o "x$panel" = xgnomeflashback])
 AM_CONDITIONAL([PANEL_GNOME2], [test "x$panel" = xgnome2])
 AM_CONDITIONAL([PANEL_GNOME3], [test "x$panel" = xgnome3])
+AM_CONDITIONAL([PANEL_GNOMEFLASHBACK], [test "x$panel" = xgnomeflashback])
 AM_CONDITIONAL([PANEL_MATE], [test "x$panel" = xmate])
 AM_CONDITIONAL([PANEL_XFCE4], [test "x$panel" = xxfce4])
 

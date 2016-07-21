@@ -20,9 +20,10 @@ already running Xmonad within [GNOME][1], MATE or [Xfce][2]:
   [tarball][4], or pull the latest version from the git repository: `git clone
   git://github.com/alexkay/xmonad-log-applet.git`
 
-The applet supports GNOME 2, GNOME 3, MATE and Xfce 4 panels, just pass
+The applet supports GNOME 2, GNOME Flashback, MATE and Xfce 4 panels, just pass
 `--with-panel=X` to `./configure` when compiling, where X is one of gnome2,
-gnome3, mate or xfce4.
+gnome3, gnomeflashback, mate or xfce4. Use gnome3 when compiling for older
+versions of Gnome 3 with libpanelapplet-4.0.
 
 If you are compiling from a git clone, you should run `./autogen.sh` instead of
 `./configure`.
