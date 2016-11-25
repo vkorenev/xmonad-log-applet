@@ -193,7 +193,7 @@ static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *containe
         }
     }
 
-    // Window tittle
+    // Window title
     GtkWidget *label = gtk_label_new(m);
     gtk_container_add(GTK_CONTAINER(container), label);
 
