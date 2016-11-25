@@ -49,8 +49,8 @@ AS_IF(
         ,
     [test "x$panel" = xmate],
         [PKG_CHECK_MODULES(LIBPANEL, libmatepanelapplet-4.0 >= 1.4.0)]
-        LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet-3.0`/share/mate-panel/applets
-        PLUGIN_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet-3.0`/libexec
+        LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet-4.0`/share/mate-panel/applets
+        PLUGIN_DIR=`$PKG_CONFIG --variable=prefix libmatepanelapplet-4.0`/libexec
         [AC_DEFINE(PANEL_MATE, 1, [panel type])]
         ,
     [test "x$panel" = xxfce4],
