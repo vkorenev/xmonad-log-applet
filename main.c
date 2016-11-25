@@ -159,7 +159,7 @@ static void signal_handler(DBusGProxy *obj, const char *msg, GtkWidget *containe
         }
         m++;
 
-        GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+        GtkWidget *box = gtk_hbox_new(FALSE,2);
         gtk_container_add(GTK_CONTAINER(container), box);
 
         char str[10];
@@ -252,7 +252,7 @@ static void xmonad_log_applet_fill(GtkContainer *container)
     mate_panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
 #endif
 
-    GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+    GtkWidget *box = gtk_hbox_new(FALSE, 8);
     xcb_init();
     set_up_dbus_transfer(box);
 
