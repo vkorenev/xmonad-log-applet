@@ -210,7 +210,11 @@ static void set_up_dbus_transfer(GtkWidget *buf)
     if(connection == NULL) {
         g_printerr("Failed to open connection: %s\n", error->message);
         g_error_free(error);
-        exit(1);
+        #ifdef PANEL_GNOME_IN_PROC
+        return;
+        #else
+        exit(-1);
+        #endif
     }
 
     proxy = dbus_g_proxy_new_for_name(
@@ -240,7 +244,9 @@ static void xmonad_log_applet_fill(GtkContainer *container)
         PANEL_APPLET_EXPAND_MINOR |
         PANEL_APPLET_HAS_HANDLE);
 
+    #ifndef PANEL_GNOME_IN_PROC
     panel_applet_set_background_widget(applet, GTK_WIDGET(applet));
+    #endif
 #endif
 #ifdef PANEL_MATE
     mate_panel_applet_set_flags(
@@ -277,7 +283,11 @@ static gboolean xmonad_log_applet_factory(
 
     if(retval == FALSE) {
         printf("Wrong applet!\n");
+        #ifdef PANEL_GNOME_IN_PROC
+        return FALSE;
+        #else
         exit(-1);
+        #endif
     }
 
     return retval;
@@ -294,7 +304,11 @@ static gboolean xmonad_log_applet_factory(
 
     if(retval == FALSE) {
         printf("Wrong applet!\n");
+        #ifdef PANEL_GNOME_IN_PROC
+        return NULL;
+        #else
         exit(-1);
+        #endif
     }
 
     return retval;
@@ -310,7 +324,11 @@ static void xmonad_log_applet_construct(XfcePanelPlugin *plugin)
 #endif
 
 #ifdef PANEL_GNOME
+#ifdef PANEL_GNOME_IN_PROC
+PANEL_APPLET_IN_PROCESS_FACTORY(
+#else
 PANEL_APPLET_OUT_PROCESS_FACTORY(
+#endif
     "XmonadLogAppletFactory",
     PANEL_TYPE_APPLET,
 #ifdef PANEL_GNOME2
