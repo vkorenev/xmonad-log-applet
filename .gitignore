@@ -19,3 +19,9 @@ install-sh
 missing
 stamp-h1
 xmonad-log-applet
+.libs/
+compile
+libtool
+libxmonad-log-applet.la
+libxmonad_log_applet_la-main.lo
+ltmain.sh

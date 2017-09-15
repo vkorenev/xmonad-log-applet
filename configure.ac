@@ -5,6 +5,10 @@ AM_INIT_AUTOMAKE([foreign])
 
 AM_MAINTAINER_MODE
 
+LT_PREREQ([2.2.6])
+LT_INIT([dlopen disable-static])
+LT_LIB_M
+
 AC_PROG_CC
 AC_PROG_SED
 AC_PROG_INSTALL
@@ -61,6 +65,7 @@ AS_IF(
         ,
     [AC_MSG_ERROR([Unknown panel type, use gnome2, gnome3, gnomeflashback, mate or xfce4])]
 )
+PKG_CHECK_MODULES(LIBPANEL_GE_3_22, libpanel-applet >= 3.22.0, PANEL_GNOME_IN_PROC=1, PANEL_GNOME_IN_PROC=0)
 AC_SUBST([LIBPANEL_APPLET_DIR])
 AC_SUBST([PLUGIN_DIR])
 
@@ -70,6 +75,8 @@ AM_CONDITIONAL([PANEL_GNOME3], [test "x$panel" = xgnome3])
 AM_CONDITIONAL([PANEL_GNOMEFLASHBACK], [test "x$panel" = xgnomeflashback])
 AM_CONDITIONAL([PANEL_MATE], [test "x$panel" = xmate])
 AM_CONDITIONAL([PANEL_XFCE4], [test "x$panel" = xxfce4])
+AM_CONDITIONAL([PANEL_GNOME_IN_PROC], [test "$PANEL_GNOME_IN_PROC" -eq 1])
+AS_IF([test "$PANEL_GNOME_IN_PROC" -eq 1], [AC_DEFINE([PANEL_GNOME_IN_PROC], [1], [Define if using libpanel-applet >= 3.22.0 and we need in process applet.])])
 
 AC_CONFIG_FILES([Makefile])
 

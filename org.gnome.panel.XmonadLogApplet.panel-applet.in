@@ -1,6 +1,7 @@
 [Applet Factory]
 Id=XmonadLogAppletFactory
-Location=@PLUGIN_DIR@/xmonad-log-applet
+@IN_PROC@
+Location=@PLUGIN_DIR@/@PLUGIN_FILE@
 Name=Xmonad Log Factory
 Description=Factory for the xmonad-log-applet
 
